@@ -1,5 +1,6 @@
 resource "aws_cloudfront_distribution" "cloudfront" {
   enabled = true
+
   origin {
     origin_id   = var.origin_id
     domain_name = var.domain_name
@@ -10,6 +11,7 @@ resource "aws_cloudfront_distribution" "cloudfront" {
       origin_ssl_protocols   = ["TLSv1"]
     }
   }
+
   default_cache_behavior {
     target_origin_id = var.origin_id
     allowed_methods  = ["GET", "HEAD"]
@@ -25,12 +27,18 @@ resource "aws_cloudfront_distribution" "cloudfront" {
     default_ttl            = 0
     max_ttl                = 0
   }
+
   restrictions {
     geo_restriction {
       restriction_type = "none"
     }
   }
+
   viewer_certificate {
     cloudfront_default_certificate = true
   }
+
+  price_class = var.cdn_price_class
+
+  tags = var.cdn_tags
 }
