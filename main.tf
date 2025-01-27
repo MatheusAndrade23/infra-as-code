@@ -14,19 +14,5 @@ module "cloudfront" {
   cdn_tags = {
     Iac = true
   }
-  depends_on      = [module.s3]
-}
-
-resource "aws_s3_bucket_website_configuration" "bucket" {
-  bucket = aws_s3_bucket.bucket.bucket
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "index.html"
-  }
-  
-  depends_on = [aws_s3_bucket.bucket]
+  depends_on = [module.s3]
 }
